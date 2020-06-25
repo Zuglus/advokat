@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+    web:
+        build: .
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www/html
+            - ./logs:/var/log
+        networks:
+            - default

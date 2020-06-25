@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /404.html
+
+Host: advokat-sank-peterburg.ru
+Sitemap: https://advokat-sank-peterburg.ru/sitemap.xml
