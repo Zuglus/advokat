@@ -53,9 +53,9 @@ html {
 *, :after, ::before {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-transition: .2s ease-in-out;
-  -o-transition: .2s ease-in-out;
-  transition: .2s ease-in-out;
+  -webkit-transition: .02s ease-in-out;
+  -o-transition: .02s ease-in-out;
+  transition: .02s ease-in-out;
 }
 
 body {
@@ -69,6 +69,7 @@ body {
 }
 
 a {
+  font-size: 1em;
   font-family: 'Alegreya SC', serif;
   text-decoration: none;
   color: #5732A6;
@@ -218,6 +219,7 @@ main {
 }
 
 .post {
+  flex: 2;
   background: -o-linear-gradient(315deg, rgba(181, 195, 255, 0.664), #B5C3FF);
   background: linear-gradient(135deg, rgba(181, 195, 255, 0.664), #B5C3FF);
   -webkit-box-shadow: 3px 3px 1px rgba(51, 72, 166, 0.322);
