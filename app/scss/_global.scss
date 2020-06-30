@@ -1,0 +1,62 @@
+html {
+  background: $colorBlueLight;
+}
+
+body {
+  font-family: $mainFont;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .16px;
+  margin: 0;
+  padding: 0;
+  color: $colorBlueDark;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  font-size: 1em;
+  font-family: $alternateFont;
+  font-weight: 700;
+  text-decoration: none;
+  color: $colorRoseDark;
+}
+
+a[href*="http"]::before,
+.external::before {
+  content: "";
+  background: url('../images/external-link.svg') no-repeat 0 0;
+  padding-left: 10px;
+  white-space: break-spaces;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: left;
+  color: $colorRoseDark;
+  text-shadow: 3px 1px rgba(0, 0, 0, .07);
+}
+
+h2 {
+  font-size: 1.5em;
+  text-align: left;
+  color: $colorRoseDark;
+  text-shadow: 3px 3px 1px rgba(0, 0, 0, .07);
+}
+
+p {
+  font-family: $mainFont;
+  text-align: justify;
+  line-height: 1.5em;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+main {
+  display: flex;
+}

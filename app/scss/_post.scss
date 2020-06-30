@@ -1,0 +1,39 @@
+.mobileMenu {
+  display: none;
+}
+
+.mobileMenu--check {
+  display: none;
+}
+
+.post {
+  flex: 2;
+  background: -o-linear-gradient(315deg, rgba(181, 195, 255, 0.664), #B5C3FF);
+  background: linear-gradient(135deg, rgba(181, 195, 255, 0.664), #B5C3FF);
+  -webkit-box-shadow: 3px 3px 1px rgba(51, 72, 166, 0.322);
+  box-shadow: 3px 3px 1px rgba(51, 73, 166, .05);
+}
+
+.post--margin {
+  margin: 5px;
+}
+
+.post__title {
+  padding: 45px 0 0 35px;
+}
+
+.post__title--bottomPadding {
+  padding-bottom: 20px;
+}
+
+.post__subtitle {
+  padding: 5px 0 20px 40px;
+}
+
+.post__text {
+  padding: 5px 30px;
+}
+
+.post__text--paddingBottom {
+  padding-bottom: 20px;
+}

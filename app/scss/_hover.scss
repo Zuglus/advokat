@@ -1,0 +1,28 @@
+@media (hover) {
+  a:hover {
+    color: #FFECC1;
+    background-color: #A6822E;
+    text-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px;
+  }
+
+  .logo:hover {
+    background-color: transparent;
+  }
+
+  .socialIcons__item:hover {
+    border-radius: 10px;
+    opacity: 0.9;
+    background-color: $colorBlueDark;
+  }
+
+  .menu__item:hover {
+    color: #D9C7FF;
+    background: -o-linear-gradient(#B5C3FF, #3348a69f, #B5C3FF);
+    background: linear-gradient(#B5C3FF, #3348a69f, #B5C3FF);
+  }
+
+  .button__layout:hover {
+    background: -o-linear-gradient(#8ca2fc, #374db3) #8ca2fc;
+    background: linear-gradient(#8ca2fc, #374db3) #8ca2fc;
+  }
+}

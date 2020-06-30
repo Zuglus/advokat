@@ -1,0 +1,131 @@
+.contacts__name {
+  color: #C9D3FF;
+  text-shadow: 3px 3px 1px rgba(0, 0, 0, .07);
+  ;
+  background: $colorBlueDark;
+  padding-left: 20px;
+}
+
+.contacts__item1 {
+  padding-left: 43px;
+  position: relative;
+  margin: 20px 20px 0 20px;
+}
+
+.contacts__item2 {
+  display: block;
+  margin: 10px 20px 0 20px;
+  margin-left: 7%;
+  padding-left: 43px;
+  position: relative;
+}
+
+.contacts__item3 {
+  display: block;
+  margin: 10px 20px 0 20px;
+  margin-left: 14%;
+  padding-left: 43px;
+  position: relative;
+}
+
+.contacts__item4 {
+  display: block;
+  margin: 10px 20px 0 20px;
+  margin-left: 21%;
+  padding-left: 43px;
+  position: relative;
+}
+
+.contacts__item5 {
+  display: block;
+  margin: 10px 20px 0 20px;
+  margin-left: 28%;
+  padding-left: 43px;
+  position: relative;
+}
+
+.contacts__item6 {
+  display: block;
+  margin: 10px 20px 0 20px;
+  margin-left: 35%;
+  padding-left: 43px;
+  position: relative;
+}
+
+.contacts__item1::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/location.svg') no-repeat 0 0;
+}
+
+.contacts__item2::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/phone.svg') no-repeat -0px 0;
+}
+
+.contacts__item3::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/email.svg') no-repeat 0 0;
+}
+
+.contacts__item4::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/telegram.svg') no-repeat 0 0;
+}
+
+.contacts__item5::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/viber.svg') no-repeat 0 0;
+}
+
+.contacts__item6::before {
+  position: absolute;
+  content: "\0000a0";
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: url('../images/whatsapp.svg') no-repeat 0 0;
+}

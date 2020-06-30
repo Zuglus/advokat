@@ -1,0 +1,160 @@
+.service__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.button__layout {
+  color: #000000;
+  font-size: 1.1em;
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+  padding: 2em 0.5em;
+  outline: none;
+  border-radius: 25px;
+  background: -o-linear-gradient(#9CAFFF, $colorBlueDark) #9CAFFF;
+  background: linear-gradient(#9CAFFF, $colorBlueDark) #9CAFFF;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+  box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+  -webkit-transition: .2s ease-in-out;
+  -o-transition: .2s ease-in-out;
+  transition: .2s ease-in-out;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  transform: rotate(-50deg) scale(0.8);
+  margin: 40px 0 40px -100px;
+}
+
+.button__label1 {
+  margin-left: 0;
+}
+
+.service__post--display {
+  display: none;
+}
+
+.service__button1:checked~.service__buttons .button__label1 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button2:checked~.service__buttons .button__label2 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button3:checked~.service__buttons .button__label3 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button4:checked~.service__buttons .button__label4 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button5:checked~.service__buttons .button__label5 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button6:checked~.service__buttons .button__label6 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button7:checked~.service__buttons .button__label7 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__button8:checked~.service__buttons .button__label8 {
+  pointer-events: none;
+  top: 1px;
+  background: -o-linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+}
+
+.service__citizen, 
+.service__criminal,
+.service__arbitraj,
+.service__consulting,
+.service__family,
+.service__legacy,
+.service__house,
+.service__work {
+  display: none;
+}
+
+.service__button1:checked~.service__consulting {
+  display: block;
+}
+
+.service__button2:checked~.service__arbitraj {
+  display: block;
+}
+
+.service__button3:checked~.service__citizen {
+  display: block;
+}
+
+.service__button4:checked~.service__criminal {
+  display: block;
+}
+
+.service__button5:checked~.service__family {
+  display: block;
+}
+.service__button6:checked~.service__legacy {
+  display: block;
+}
+.service__button7:checked~.service__house {
+  display: block;
+}
+.service__button8:checked~.service__work {
+  display: block;
+}
