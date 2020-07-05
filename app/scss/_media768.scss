@@ -1,0 +1,40 @@
+@media screen and (max-width: 768px) {
+  header {
+    box-shadow: none;
+  }
+
+  .menu {
+    font-size: 0.9em;
+  }
+
+  main {
+    flex-direction: column;
+  }
+
+  .post {
+    box-shadow: none;
+    background: $colorContent;
+
+    &--margin {
+      margin: 0;
+    }
+  }
+
+  .button__layout {
+    font-size: 1.33em;
+  }
+
+  .service__price {
+    width: 100px;
+  }
+
+  aside {
+    flex-direction: row;
+  }
+
+  .aside__img {
+    padding-right: 0;
+    padding-left: 10px;
+  }
+
+}

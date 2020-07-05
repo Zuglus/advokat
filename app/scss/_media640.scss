@@ -1,0 +1,27 @@
+@media screen and (max-width: 640px) {
+  .menu {
+    margin: auto;
+  }
+  .menu__item--selected {
+    display: none;
+  }
+
+  .menu__item--displayNone {
+    display: none;
+    width: 0;
+  }
+
+  .socialIcons {
+    padding-left: 0;
+  }
+
+  .menu__item {
+    font-size: 1.5em;
+    display: flex;
+    height: 30px;
+    width: 80px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+}

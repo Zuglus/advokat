@@ -1,0 +1,17 @@
+@media screen and (max-width: 667px) {
+  .menu li {
+    transform: scaleY(1.2);
+  }
+
+  .menu__item {
+    font-size: 1em;
+  }
+
+  .button__layout {
+    font-size: 1.2em;
+  }
+
+  .usefulLinks__item {
+    margin-right: 10px;
+  }
+}

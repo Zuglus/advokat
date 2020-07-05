@@ -1,0 +1,21 @@
+@media screen and (max-width: 600px) {
+  .header__secondLine {
+    padding-left: 0;
+  }
+
+  .logo--size {
+    max-width: 350px;
+  }
+
+  .header__requisites {
+    padding-left: 0;
+  }
+
+  .button__layout {
+    font-size: 1.1em;
+  }
+
+  .service__price {
+    width: 90px;
+  }
+}

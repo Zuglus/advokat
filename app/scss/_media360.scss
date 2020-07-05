@@ -1,0 +1,23 @@
+@media screen and (max-width: 360px) {
+  table {
+    font-size: 85%;
+  }
+.button__layout {
+  padding: 1.5em 0.5em;
+}
+
+  .service__price {
+    width: 60px;
+  }
+
+  .contacts {
+    &__item1,
+    &__item2,
+    &__item3,
+    &__item4,
+    &__item5,
+    &__item6 {
+      margin-left: 0;
+    }
+  }
+}

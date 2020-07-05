@@ -17,12 +17,10 @@
 
   .menu__item:hover {
     color: #D9C7FF;
-    background: -o-linear-gradient(#B5C3FF, #3348a69f, #B5C3FF);
     background: linear-gradient(#B5C3FF, #3348a69f, #B5C3FF);
   }
 
   .button__layout:hover {
-    background: -o-linear-gradient(#8ca2fc, #374db3) #8ca2fc;
     background: linear-gradient(#8ca2fc, #374db3) #8ca2fc;
   }
 }

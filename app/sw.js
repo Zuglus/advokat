@@ -16,7 +16,6 @@ const staticAssets = [
 ];
 
 self.addEventListener('install', async event => {
-
   const cache = await caches.open(staticCacheName);
   await cache.addAll(staticAssets);
   console.log('Service worker has been installed');

@@ -1,6 +1,5 @@
 header {
-  background: #9CAFFF;
-  -webkit-box-shadow: 3px 3px 1px rgba(0, 0, 0, .05);
+  background: $colorHeader;
   box-shadow: 3px 3px 1px rgba(0, 0, 0, .05);
 }
 
@@ -19,11 +18,7 @@ header {
 }
 
 .socialIcons {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
   align-items: center;
 }
@@ -34,15 +29,8 @@ header {
 }
 
 .header__secondLine {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-  -ms-flex-flow: row-reverse;
   flex-flow: row-reverse;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 5px 20px 10px;
 }
@@ -64,8 +52,6 @@ header {
 }
 
 .menu {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   list-style: none;
   align-items: center;
@@ -77,11 +63,8 @@ header {
   color: $colorRoseDark;
   padding: 0.7rem 1.4rem;
   border-radius: .2em;
-  background: -o-linear-gradient(rgba(181, 195, 255, 0.7), #C9D3FF, rgba(181, 195, 255, 0.7));
   background: linear-gradient(rgba(181, 195, 255, 0.7), #C9D3FF, rgba(181, 195, 255, 0.7));
   margin: 0 0.2rem;
-  -webkit-transition: all 0.225s ease-in-out;
-  -o-transition: all 0.225s ease-in-out;
   transition: all 0.225s ease-in-out;
   cursor: pointer;
 }
