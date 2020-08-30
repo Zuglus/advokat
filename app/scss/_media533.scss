@@ -39,29 +39,40 @@
   .mobileMenu {
     display: block;
     float: right;
-    color: $colorForContrast;
+    margin-top: 15px;
     margin-right: 20px;
     font-family: 'Roboto', sans-serif;
     font-size: 1.2em;
-    color: $colorForContrast;
-    background-color: $colorHeader;
-    box-shadow: 3px 3px 1px rgba(0, 0, 0, .05);
     border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-    text-align: center;
-    transition: all 0.3s 0.01s ease;
+    outline: none;
+    padding: 12px;
     cursor: pointer;
+    color: $colorBlueLight;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+    background: linear-gradient($colorHeader, $colorBlueDark) $colorHeader;
+    box-shadow: 0 1px rgba(255, 255, 255, .2) inset, 0 3px 5px rgba(0, 1, 6, .5), 0 0 1px 1px rgba(0, 1, 6, .2);
+    outline: none;
+    border-radius: 15px;
+    transition: .2s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
-    &--check:checked~.header__secondLine .menu {
+    &--check:checked~main .post .mobileMenu {
+      top: 16px;
+      background: linear-gradient(#BA9AFF, $colorRoseDark) #BA9AFF;
+      box-shadow: 0 0 1px rgba(0, 0, 0, .5) inset, 0 2px 3px rgba(0, 0, 0, .5) inset, 0 1px 1px rgba(255, 255, 255, .1);
+    }
+
+    &--check:checked~header .header__secondLine .menu {
       display: flex;
     }
 
-    &--check:checked~.header__firstLine .socialIcons {
+    &--check:checked~ header .header__firstLine .socialIcons {
       display: none;
     }
 
-    &--check:checked~.header__secondLine .header__requisites {
+    &--check:checked~header .header__secondLine .header__requisites {
       display: none;
     }
   }
