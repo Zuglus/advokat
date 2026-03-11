@@ -1,6 +1,7 @@
 {
   "name": "advokat",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "start": "npx @11ty/eleventy --serve",

@@ -1,3 +1,16 @@
+{% if breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Навигация">
+    <a href="/">Главная</a>
+    {% for crumb in breadcrumbs %}
+      <span class="breadcrumbs-sep">/</span>
+      {% if crumb.url %}
+        <a href="{{ crumb.url }}">{{ crumb.name }}</a>
+      {% else %}
+        <span>{{ crumb.name }}</span>
+      {% endif %}
+    {% endfor %}
+  </nav>
+{% endif %}
 {% if pageHeader %}
   <h1 class="page-heading">{{ pageHeader }}</h1>
 {% endif %}

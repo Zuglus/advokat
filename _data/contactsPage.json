@@ -18,8 +18,6 @@
     { "id": 3, "name": "Email:", "text": "lkynteretc@gmail.com", "href": "mailto:lkynteretc@gmail.com", "icon": "email", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
     { "id": 4, "name": "Telegram:", "text": "Lkynteretc", "href": "tg://resolve?domain=Lkynteretc", "icon": "telegram", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
     { "id": 5, "name": "Viber:", "text": "+7 (911) 985-50-36", "href": "viber://chat?number=+79119855036", "icon": "viber", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 6, "name": "WhatsApp:", "text": "+7 (911) 985-50-36", "href": "whatsapp://send?phone=79119855036", "icon": "whatsapp", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 7, "name": "Facebook:", "text": "id=100056061102769", "href": "https://www.facebook.com/profile.php?id=100056061102769", "icon": "facebook", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 8, "name": "Instagram:", "text": "advokat_kynteretc", "href": "https://instagram.com/advokat_kynteretc?igshid=1fetv0o6i8m6k", "icon": "instagram", "gridMD": 4, "gridSM": 6, "gridXS": 12 }
+    { "id": 6, "name": "WhatsApp:", "text": "+7 (911) 985-50-36", "href": "whatsapp://send?phone=79119855036", "icon": "whatsapp", "gridMD": 4, "gridSM": 6, "gridXS": 12 }
   ]
 }

@@ -3,16 +3,50 @@
     <div class="header-main">
       <div class="header-logo">
         <a href="/">
-          <img src="/images/logo.svg" alt="Logo" class="logo-img">
+          <img src="/images/logo.svg" alt="Адвокат Кынтэрец Л.Н." class="logo-img">
         </a>
       </div>
       {% include "partials/nav.njk" %}
     </div>
     <div class="header-contacts">
       {% for iconName in headerIcons %}
-        <a href="{% if iconName == 'telegram' %}tg://resolve?domain=Lkynteretc{% elif iconName == 'viber' %}viber://chat?number=+79119855036{% elif iconName == 'whatsapp' %}whatsapp://send?phone=79119855036{% endif %}" class="header-contact-link">
+        {% for contact in contacts %}
+          {% if contact.icon == iconName %}
+        <a href="{{ contact.link }}" class="header-contact-link">
           <img src="/images/{{ iconName }}.svg" width="35" alt="{{ iconName }}">
         </a>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+    <button class="burger-btn" aria-label="Открыть меню">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <nav class="mobile-nav">
+      {% for item in nav %}
+        <a href="{{ item.page }}" class="mobile-nav-link{% if page.url.startsWith(item.page) %} active{% endif %}">{{ item.name }}</a>
+      {% endfor %}
+    </nav>
+    <div class="mobile-contacts">
+      {% for contact in contacts %}
+        {% if contact.icon == "phone" %}
+      <a href="{{ contact.link }}" class="mobile-contact-link">
+        <img src="/images/phone.svg" width="28" alt="Телефон"> {{ contact.text }}
+      </a>
+        {% endif %}
+      {% endfor %}
+      {% for iconName in headerIcons %}
+        {% for contact in contacts %}
+          {% if contact.icon == iconName %}
+        <a href="{{ contact.link }}" class="mobile-contact-icon">
+          <img src="/images/{{ iconName }}.svg" width="32" alt="{{ iconName }}">
+        </a>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
