@@ -71,7 +71,9 @@ ul {
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  padding: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .header-main {
@@ -95,7 +97,7 @@ ul {
 
 .header-contacts {
   display: none;
-  width: 33.33%;
+  flex-shrink: 0;
   padding: 8px;
   justify-content: flex-end;
   gap: 8px;
@@ -107,7 +109,7 @@ ul {
 }
 
 .header-contact-link img {
-  filter: brightness(0) invert(1);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 /* Navigation Tabs */

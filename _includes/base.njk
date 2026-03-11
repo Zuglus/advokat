@@ -22,7 +22,7 @@
   <title>{{ site.title }}</title>
 </head>
 <body>
-  {% block content %}{% endblock %}
+  {% block content %}{{ content | safe }}{% endblock %}
   <script src="//code-ya.jivosite.com/widget/{{ site.jivosite }}" async></script>
   <script src="/js/tabs.js" defer></script>
 </body>
