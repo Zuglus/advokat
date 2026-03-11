@@ -1,0 +1,28 @@
+<div class="sidebar-friends">
+  <div class="paper">
+    <h3 class="sidebar-title">Друзья</h3>
+    <div class="friends-button-wrap">
+      <a href="https://xn--18-6kci4ddh.xn--p1ai/" class="friends-button">Детективное агентство "Право"</a>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-gallery">
+  <img src="/images/train.jpg" alt="Train" width="100%">
+</div>
+
+<div class="sidebar-links">
+  <div class="paper">
+    <h3 class="sidebar-title">Полезные ссылки</h3>
+    <ul class="useful-links">
+      {% for item in usefulLinks %}
+        <li>
+          <a href="{{ item.link }}" target="_blank" rel="noopener" class="useful-link">
+            <img src="/images/externalLink.svg" width="10" alt="">
+            {{ item.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

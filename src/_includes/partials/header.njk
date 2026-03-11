@@ -1,0 +1,19 @@
+<header class="header">
+  <div class="header-toolbar">
+    <div class="header-main">
+      <div class="header-logo">
+        <a href="/">
+          <img src="/images/logo.svg" alt="Logo" class="logo-img">
+        </a>
+      </div>
+      {% include "partials/nav.njk" %}
+    </div>
+    <div class="header-contacts">
+      {% for iconName in headerIcons %}
+        <a href="{% if iconName == 'telegram' %}tg://resolve?domain=Lkynteretc{% elif iconName == 'viber' %}viber://chat?number=+79119855036{% elif iconName == 'whatsapp' %}whatsapp://send?phone=79119855036{% endif %}" class="header-contact-link">
+          <img src="/images/{{ iconName }}.svg" width="35" alt="{{ iconName }}">
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</header>

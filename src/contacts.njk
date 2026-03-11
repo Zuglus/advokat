@@ -1,0 +1,12 @@
+---
+layout: layout.njk
+pageHeader: "Контактная информация"
+activeNav: /contacts/
+---
+{% from "partials/block-of-text.njk" import renderText %}
+{% from "partials/grid-of-buttons.njk" import renderButtons %}
+
+{% include "partials/heading.njk" %}
+{{ renderText(contactsPage.text) }}
+{{ renderButtons(contactsPage.buttons) }}
+{{ renderText(contactsPage.text2) }}

@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+activeNav: /assistance/
+---
+{% from "partials/block-of-text.njk" import renderText %}
+{% from "partials/alert-text.njk" import renderAlert %}
+{% from "partials/table-price.njk" import renderTable %}
+
+{{ renderText(consulting.text) }}
+{{ renderAlert(consulting.alertText) }}
+{{ renderTable(consulting.table) }}

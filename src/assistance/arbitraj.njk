@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+pageHeader: "Оказание юридической помощи по арбитражным делам"
+activeNav: /assistance/
+---
+{% from "partials/block-of-text.njk" import renderText %}
+{% from "partials/table-price.njk" import renderTable %}
+
+{% include "partials/heading.njk" %}
+{{ renderText(arbitraj.text) }}
+{{ renderTable(arbitraj.table) }}

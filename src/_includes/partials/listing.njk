@@ -1,0 +1,11 @@
+{% macro renderList(items) %}
+<ul class="listing">
+  {% for item in items %}
+    {% if item.subheader %}
+      <li class="listing-subheader">{{ item.subheader }}</li>
+    {% elif item.text %}
+      <li class="listing-item{% if not item.notDivider %} listing-divider{% endif %}">{{ item.text }}</li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endmacro %}

@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+pageHeader: "Кынтэрец Людмила Николаевна"
+pageSubHeader: "Адвокат"
+activeNav: /about/
+---
+{% from "partials/block-of-text.njk" import renderText %}
+
+{% include "partials/heading.njk" %}
+<img src="/images/advokat.jpg" alt="Адвокат Кынтэрец Л.Н." class="about-photo">
+{{ renderText(about.text) }}

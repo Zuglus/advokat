@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+pageHeader: "Юридическая помощь"
+activeNav: /assistance/
+---
+{% from "partials/block-of-text.njk" import renderText %}
+{% from "partials/grid-of-buttons.njk" import renderButtons %}
+
+{% include "partials/heading.njk" %}
+{{ renderText(assistance.text) }}
+{{ renderButtons(assistance.buttons) }}

@@ -1,0 +1,10 @@
+{% macro renderAlert(items) %}
+<div class="alert-block">
+  {% for item in items %}
+    <p class="alert-text"
+       style="text-align: {{ item.align | default('center') }}{% if item.textDecoration %}; text-decoration: {{ item.textDecoration }}{% endif %}">
+      {{ item.paragraph }}
+    </p>
+  {% endfor %}
+</div>
+{% endmacro %}
