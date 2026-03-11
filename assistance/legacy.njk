@@ -1,0 +1,9 @@
+---
+layout: layout.njk
+pageHeader: "Оказание юридической помощи по наследственным делам"
+activeNav: /assistance/
+---
+{% from "partials/listing.njk" import renderList %}
+
+{% include "partials/heading.njk" %}
+{{ renderList(legacy.list) }}

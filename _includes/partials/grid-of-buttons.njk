@@ -1,0 +1,17 @@
+{% macro renderButtons(buttons) %}
+<div class="btn-grid">
+  {% for btn in buttons %}
+    <a href="{{ btn.link or btn.href }}" class="btn btn-primary{% if btn.icon %} btn-with-icon{% endif %}"
+       {% if btn.href and not btn.link %}target="_blank" rel="noopener"{% endif %}>
+      {% if btn.icon %}
+        <img src="/images/{{ btn.icon }}.svg" width="35" alt="{{ btn.icon }}" class="btn-icon">
+      {% endif %}
+      <span>
+        {% if btn.name %}<span class="btn-name">{{ btn.name }}</span>{% endif %}
+        {% if btn.text %}<span class="btn-text">{{ btn.text }}</span>{% endif %}
+        {% if btn.text2 %}<br><span class="btn-text">{{ btn.text2 }}</span>{% endif %}
+      </span>
+    </a>
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -1,0 +1,22 @@
+{% extends "base.njk" %}
+
+{% block content %}
+<div class="app">
+  {% include "partials/header.njk" %}
+  <div class="container">
+    <div class="body-grid">
+      <main class="main-content">
+        <div class="paper">
+          {{ content | safe }}
+        </div>
+      </main>
+      <aside class="sidebar">
+        {% include "partials/sidebar.njk" %}
+      </aside>
+    </div>
+    <footer class="footer">
+      <p class="footer-text">Copyright &copy; Кынтэрец Л.Н. {{ "" | year }}</p>
+    </footer>
+  </div>
+</div>
+{% endblock %}

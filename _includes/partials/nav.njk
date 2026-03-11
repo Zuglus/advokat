@@ -1,0 +1,8 @@
+<nav class="nav-tabs">
+  {% for item in nav %}
+    <a href="{{ item.page }}"
+       class="tab-link{% if page.url.startsWith(item.page) %} active{% endif %}">
+      {{ item.name }}
+    </a>
+  {% endfor %}
+</nav>
