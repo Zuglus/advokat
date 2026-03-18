@@ -1,0 +1,19 @@
+{{define "content"}}
+<h1 class="page-heading">{{.About.Header}}</h1>
+<h2 class="page-subheading">{{.About.SubHeader}}</h2>
+
+<p class="text-paragraph text-justify">{{(index .About.Text 0).Paragraph}}</p>
+<p class="text-paragraph text-justify">{{(index .About.Text 1).Paragraph}}</p>
+
+<h2 class="page-subheading section-heading">Юридическая помощь</h2>
+{{template "renderButtons" .Assistance.Buttons}}
+
+<div class="cta-block">
+  <p class="cta-text">Нужна помощь адвоката? Свяжитесь со мной:</p>
+  {{range .Contacts}}
+    {{if eq .Icon "phone"}}
+  <a href="{{.Link}}" class="btn btn-cta">{{.Text}}</a>
+    {{end}}
+  {{end}}
+</div>
+{{end}}
