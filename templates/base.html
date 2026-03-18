@@ -57,7 +57,7 @@
         {{$icon := .}}
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
-        <a href="{{.Link}}" class="header-contact-link">
+        <a href="{{safeURL .Link}}" class="header-contact-link">
           <img src="/images/{{$icon}}.svg" width="35" alt="{{$icon}}">
         </a>
           {{end}}
@@ -79,7 +79,7 @@
     <div class="mobile-contacts">
       {{range .Contacts}}
         {{if eq .Icon "phone"}}
-      <a href="{{.Link}}" class="mobile-contact-link">
+      <a href="{{safeURL .Link}}" class="mobile-contact-link">
         <img src="/images/phone.svg" width="28" alt="Телефон"> {{.Text}}
       </a>
         {{end}}
@@ -88,7 +88,7 @@
         {{$icon := .}}
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
-        <a href="{{.Link}}" class="mobile-contact-icon">
+        <a href="{{safeURL .Link}}" class="mobile-contact-icon">
           <img src="/images/{{$icon}}.svg" width="32" alt="{{$icon}}">
         </a>
           {{end}}

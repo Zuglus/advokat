@@ -12,7 +12,7 @@
   <p class="cta-text">Нужна помощь адвоката? Свяжитесь со мной:</p>
   {{range .Contacts}}
     {{if eq .Icon "phone"}}
-  <a href="{{.Link}}" class="btn btn-cta">{{.Text}}</a>
+  <a href="{{safeURL .Link}}" class="btn btn-cta">{{.Text}}</a>
     {{end}}
   {{end}}
 </div>

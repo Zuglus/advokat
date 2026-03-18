@@ -41,7 +41,7 @@
 {{define "renderButtons"}}
 <div class="btn-grid">
   {{range .}}
-    <a href="{{if .Link}}{{.Link}}{{else}}{{.Href}}{{end}}" class="btn btn-primary{{if .Icon}} btn-with-icon{{end}}"
+    <a href="{{if .Link}}{{safeURL .Link}}{{else}}{{safeURL .Href}}{{end}}" class="btn btn-primary{{if .Icon}} btn-with-icon{{end}}"
        {{if isExternal .}}target="_blank" rel="noopener"{{end}}>
       {{if .Icon}}
         <img src="/images/{{.Icon}}.svg" width="35" alt="{{.Icon}}" class="btn-icon">

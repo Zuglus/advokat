@@ -237,6 +237,7 @@ func newFuncMap() template.FuncMap {
 			return Contact{}
 		},
 		"isFirst": func(i int) bool { return i == 0 },
+		"safeURL": func(s string) template.URL { return template.URL(s) },
 	}
 }
 
