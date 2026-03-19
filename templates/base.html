@@ -1,0 +1,133 @@
+{{define "base"}}<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{.Site.ThemeColor}}">
+  <meta name="description" content="{{if .PageDescription}}{{.PageDescription}}{{else}}{{.Site.Description}}{{end}}">
+  <meta name="keywords" content="{{.Site.Keywords}}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <meta name="apple-mobile-web-app-status-bar-style" content="{{.Site.ThemeColor}}">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>{{if .PageTitle}}{{.PageTitle}}{{else if .PageHeader}}{{.PageHeader}} — {{.Site.Title}}{{else}}{{.Site.Title}}{{end}}</title>
+</head>
+<body>
+<div class="app">
+  {{template "header" .}}
+  <div class="container">
+    <div class="body-grid">
+      <main class="main-content">
+        <div class="paper">
+          {{template "content" .}}
+        </div>
+      </main>
+      <aside class="sidebar">
+        {{template "sidebar" .}}
+      </aside>
+    </div>
+    <footer class="footer">
+      <p class="footer-text">Copyright &copy; Кынтэрец Л.Н. {{year}}</p>
+    </footer>
+  </div>
+</div>
+<script src="/js/app.js" defer></script>
+{{if .UseTabs}}<script src="/js/tabs.js" defer></script>{{end}}
+</body>
+</html>{{end}}
+
+{{define "header"}}
+<header class="header">
+  <div class="header-toolbar">
+    <div class="header-main">
+      <div class="header-logo">
+        <a href="/">
+          <img src="/images/logo.svg" alt="Адвокат Кынтэрец Л.Н." class="logo-img">
+        </a>
+      </div>
+      <nav class="nav-tabs">
+        {{range .Nav}}
+          <a href="{{.Page}}" class="tab-link{{if hasPrefix $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+        {{end}}
+      </nav>
+    </div>
+    <div class="header-contacts">
+      {{range .HeaderIcons}}
+        {{$icon := .}}
+        {{range $.Contacts}}
+          {{if eq .Icon $icon}}
+        <a href="{{safeURL .Link}}" class="header-contact-link">
+          <img src="/images/{{$icon}}.svg" width="35" alt="{{$icon}}">
+        </a>
+          {{end}}
+        {{end}}
+      {{end}}
+    </div>
+    <button class="burger-btn" aria-label="Открыть меню">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <nav class="mobile-nav">
+      {{range .Nav}}
+        <a href="{{.Page}}" class="mobile-nav-link{{if hasPrefix $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+      {{end}}
+    </nav>
+    <div class="mobile-contacts">
+      {{range .Contacts}}
+        {{if eq .Icon "phone"}}
+      <a href="{{safeURL .Link}}" class="mobile-contact-link">
+        <img src="/images/phone.svg" width="28" alt="Телефон"> {{.Text}}
+      </a>
+        {{end}}
+      {{end}}
+      {{range .HeaderIcons}}
+        {{$icon := .}}
+        {{range $.Contacts}}
+          {{if eq .Icon $icon}}
+        <a href="{{safeURL .Link}}" class="mobile-contact-icon">
+          <img src="/images/{{$icon}}.svg" width="32" alt="{{$icon}}">
+        </a>
+          {{end}}
+        {{end}}
+      {{end}}
+    </div>
+  </div>
+</header>
+{{end}}
+
+{{define "sidebar"}}
+<div class="sidebar-friends">
+  <div class="paper">
+    <h3 class="sidebar-title">Партнёры</h3>
+    <div class="friends-button-wrap">
+      <a href="https://xn--18-6kci4ddh.xn--p1ai/" class="friends-button" target="_blank" rel="noopener">Детективное агентство "Право"</a>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-gallery">
+  <div class="paper sidebar-art">
+    <img src="/images/train.jpg" alt="Рисунок" class="sidebar-art-img">
+  </div>
+</div>
+
+<div class="sidebar-links">
+  <div class="paper">
+    <h3 class="sidebar-title">Полезные ссылки</h3>
+    <ul class="useful-links">
+      {{range .UsefulLinks}}
+        <li>
+          <a href="{{.Link}}" target="_blank" rel="noopener" class="useful-link">
+            <img src="/images/externalLink.svg" width="10" alt="">
+            {{.Name}}
+          </a>
+        </li>
+      {{end}}
+    </ul>
+  </div>
+</div>
+{{end}}

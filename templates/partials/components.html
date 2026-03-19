@@ -1,0 +1,124 @@
+{{define "heading"}}
+{{if .Breadcrumbs}}
+  <nav class="breadcrumbs" aria-label="Навигация">
+    <a href="/">Главная</a>
+    {{range .Breadcrumbs}}
+      <span class="breadcrumbs-sep">/</span>
+      {{if .URL}}
+        <a href="{{.URL}}">{{.Name}}</a>
+      {{else}}
+        <span>{{.Name}}</span>
+      {{end}}
+    {{end}}
+  </nav>
+{{end}}
+{{if .PageHeader}}
+  <h1 class="page-heading">{{.PageHeader}}</h1>
+{{end}}
+{{if .PageSubHeader}}
+  <h2 class="page-subheading">{{.PageSubHeader}}</h2>
+{{end}}
+{{end}}
+
+{{define "renderText"}}
+{{range .}}
+  <p class="text-paragraph{{if eq .Variant "subtitle2"}} text-subtitle{{else if eq .Variant "body2"}} text-body2{{else if eq .Variant "overline"}} text-overline{{end}}"
+     style="text-align: {{defaultAlign .Align}}{{if .TextDecoration}}; text-decoration: {{.TextDecoration}}{{end}}">
+    {{if .ParagraphBefore}}
+      {{.ParagraphBefore}}
+      <a href="{{.LinkHref}}"
+         {{if .Target}}target="{{.Target}}"{{end}}
+         {{if .Download}}download{{end}}
+         class="text-link">{{.LinkName}}</a>
+      {{.ParagraphAfter}}
+    {{else}}
+      {{.Paragraph}}
+    {{end}}
+  </p>
+{{end}}
+{{end}}
+
+{{define "renderButtons"}}
+<div class="btn-grid">
+  {{range .}}
+    <a href="{{if .Link}}{{safeURL .Link}}{{else}}{{safeURL .Href}}{{end}}" class="btn btn-primary{{if .Icon}} btn-with-icon{{end}}"
+       {{if isExternal .}}target="_blank" rel="noopener"{{end}}>
+      {{if .Icon}}
+        <img src="/images/{{.Icon}}.svg" width="35" alt="{{.Icon}}" class="btn-icon">
+      {{end}}
+      <span>
+        {{if .Name}}<span class="btn-name">{{.Name}}</span>{{end}}
+        {{if .Text}}<span class="btn-text">{{.Text}}</span>{{end}}
+        {{if .Text2}}<br><span class="btn-text">{{.Text2}}</span>{{end}}
+      </span>
+    </a>
+  {{end}}
+</div>
+{{end}}
+
+{{define "renderTable"}}
+<div class="price-table-wrap">
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Вид юридической помощи</th>
+        <th>Стоимость (руб.)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .}}
+        <tr>
+          <td>{{.Text}}</td>
+          <td class="price-cell">
+            {{.Price}}
+            {{if .Price2}}<br><span class="price-note">{{.Price2}}</span>{{end}}
+          </td>
+        </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>
+{{end}}
+
+{{define "renderList"}}
+<ul class="listing">
+  {{range .}}
+    {{if .Subheader}}
+      <li class="listing-subheader">{{.Subheader}}</li>
+    {{else if .Text}}
+      <li class="listing-item{{if not .NotDivider}} listing-divider{{end}}">{{.Text}}</li>
+    {{end}}
+  {{end}}
+</ul>
+{{end}}
+
+{{define "renderAlert"}}
+<div class="alert-block">
+  {{range .}}
+    <p class="alert-text"
+       style="text-align: {{defaultAlignCenter .Align}}{{if .TextDecoration}}; text-decoration: {{.TextDecoration}}{{end}}">
+      {{.Paragraph}}
+    </p>
+  {{end}}
+</div>
+{{end}}
+
+{{define "renderTabs"}}
+<div class="tabs-container">
+  <div class="tabs-buttons">
+    {{range $i, $tab := .}}
+      <button class="tabs-btn{{if isFirst $i}} active{{end}}" data-tab="{{$tab.TabName}}">
+        {{$tab.ButtonName}}
+      </button>
+    {{end}}
+  </div>
+  {{range $i, $tab := .}}
+    <div class="tabs-content{{if isFirst $i}} active{{end}}" data-tab-content="{{$tab.TabName}}">
+      {{template "renderText" $tab.Text}}
+      {{if $tab.Table}}
+        {{template "renderTable" $tab.Table}}
+      {{end}}
+    </div>
+  {{end}}
+</div>
+{{end}}

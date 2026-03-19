@@ -1,0 +1,12 @@
+{{define "content"}}
+{{template "heading" .}}
+{{template "renderText" .ContactsPage.Text}}
+{{template "renderButtons" .ContactsPage.Buttons}}
+
+<details class="legal-details">
+  <summary class="legal-summary">Политика обработки персональных данных</summary>
+  <div class="legal-content">
+    {{template "renderText" .ContactsPage.Text2}}
+  </div>
+</details>
+{{end}}
