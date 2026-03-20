@@ -5,7 +5,7 @@
       "id": 1,
       "paragraphBefore": "В данной рубрике представлена информация о видах юридической помощи, оказываемой адвокатом, на предоставление которых в обязательном порядке заключается ",
       "linkName": "соглашение об оказании юридической помощи",
-      "linkHref": "./agreement.doc",
+      "linkHref": "/agreement.docx",
       "paragraphAfter": " в случае участия защитника (адвоката) в уголовном судопроизводстве, соглашение об оказании юридической помощи в гражданском, конституционном производстве, в случае правового обслуживания юридических лиц на постоянной основе договор о правовом обслуживании юридических лиц.",
       "target": "_blank",
       "download": true,
@@ -18,13 +18,13 @@
     }
   ],
   "buttons": [
-    { "id": "1", "name": "Уголовные дела", "link": "/assistance/criminal/", "gridXS": 6, "gridSM": 4 },
-    { "id": "2", "name": "Арбитраж", "link": "/assistance/arbitraj/", "gridXS": 6, "gridSM": 4 },
-    { "id": "3", "name": "Консультация", "link": "/assistance/consulting/", "gridXS": 6, "gridSM": 4 },
-    { "id": "4", "name": "Гражданские дела", "link": "/assistance/civil/", "gridXS": 6, "gridSM": 4 },
-    { "id": "5", "name": "Семейные споры", "link": "/assistance/family/", "gridXS": 6, "gridSM": 4 },
-    { "id": "6", "name": "Наследство", "link": "/assistance/legacy/", "gridXS": 6, "gridSM": 4 },
-    { "id": "7", "name": "Жилищные споры", "link": "/assistance/house/", "gridXS": 6, "gridSM": 4 },
-    { "id": "8", "name": "Налоговые споры", "link": "/assistance/tax/", "gridXS": 6, "gridSM": 4 }
+    { "id": 1, "name": "Уголовные дела", "link": "/assistance/criminal/" },
+    { "id": 2, "name": "Арбитраж", "link": "/assistance/arbitraj/" },
+    { "id": 3, "name": "Консультация", "link": "/assistance/consulting/" },
+    { "id": 4, "name": "Гражданские дела", "link": "/assistance/civil/" },
+    { "id": 5, "name": "Семейные споры", "link": "/assistance/family/" },
+    { "id": 6, "name": "Наследство", "link": "/assistance/legacy/" },
+    { "id": 7, "name": "Жилищные споры", "link": "/assistance/house/" },
+    { "id": 8, "name": "Налоговые споры", "link": "/assistance/tax/" }
   ]
 }

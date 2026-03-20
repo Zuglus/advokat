@@ -25,12 +25,6 @@
     "icon": "telegram"
   },
   {
-    "name": "Viber:",
-    "text": "+7 (911) 985-50-36",
-    "link": "viber://chat?number=+79119855036",
-    "icon": "viber"
-  },
-  {
     "name": "WhatsApp:",
     "text": "+7 (911) 985-50-36",
     "link": "whatsapp://send?phone=79119855036",

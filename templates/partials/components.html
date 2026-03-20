@@ -103,6 +103,20 @@
 </div>
 {{end}}
 
+{{define "renderPricingNote"}}
+<div class="pricing-note">
+  <p class="pricing-note-text">Стоимость услуг определяется индивидуально с учётом сложности дела и объёма юридической помощи.</p>
+  <div class="pricing-note-actions">
+    {{range .Contacts}}
+      {{if eq .Icon "phone"}}
+    <a href="{{safeURL .Link}}" class="btn btn-cta">Позвонить: {{.Text}}</a>
+      {{end}}
+    {{end}}
+    <a href="/assistance/consulting/" class="btn btn-gold">Консультация — от 2 500 руб.</a>
+  </div>
+</div>
+{{end}}
+
 {{define "renderTabs"}}
 <div class="tabs-container">
   <div class="tabs-buttons">

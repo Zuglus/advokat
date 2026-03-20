@@ -1,19 +1,29 @@
 {{define "content"}}
-<h1 class="page-heading">{{.About.Header}}</h1>
-<h2 class="page-subheading">{{.About.SubHeader}}</h2>
+<h1 class="page-heading">Адвокат в Санкт-Петербурге</h1>
+<p class="page-subheading">Кынтэрец Людмила Николаевна</p>
 
-<p class="text-paragraph text-justify">{{(index .About.Text 0).Paragraph}}</p>
-<p class="text-paragraph text-justify">{{(index .About.Text 1).Paragraph}}</p>
+<p class="text-paragraph">Защита по уголовным делам, представительство в арбитражных и гражданских судах. Более 15 лет практики в Санкт-Петербурге.</p>
+<p class="text-paragraph">Работаю с делами любой сложности на всех стадиях: от доследственной проверки до Верховного суда и суда присяжных.</p>
 
-<h2 class="page-subheading section-heading">Юридическая помощь</h2>
-{{template "renderButtons" .Assistance.Buttons}}
-
-<div class="cta-block">
-  <p class="cta-text">Нужна помощь адвоката? Свяжитесь со мной:</p>
+<div class="hero-cta">
   {{range .Contacts}}
     {{if eq .Icon "phone"}}
-  <a href="{{safeURL .Link}}" class="btn btn-cta">{{.Text}}</a>
+  <a href="{{safeURL .Link}}" class="btn btn-cta">Позвонить: {{.Text}}</a>
     {{end}}
   {{end}}
+  <span class="hero-cta-note">Консультация — от 2 500 руб.</span>
 </div>
+
+<h2 class="section-title">Основная специализация</h2>
+<div class="featured-card">
+  <h3 class="featured-card-title">Уголовные дела</h3>
+  <p class="featured-card-text">Защита подозреваемых, обвиняемых и осуждённых. Представление интересов потерпевших и свидетелей. Выезд к месту задержания — в течение часа.</p>
+  <div class="featured-card-footer">
+    <span class="featured-card-price">от 5 000 руб.</span>
+    <a href="/assistance/criminal/" class="btn btn-gold">Подробнее</a>
+  </div>
+</div>
+
+<h2 class="section-title">Другие направления</h2>
+{{template "renderButtons" .Assistance.Buttons}}
 {{end}}

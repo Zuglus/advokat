@@ -7,7 +7,9 @@
   <meta name="theme-color" content="{{.Site.ThemeColor}}">
   <meta name="description" content="{{if .PageDescription}}{{.PageDescription}}{{else}}{{.Site.Description}}{{end}}">
   <meta name="keywords" content="{{.Site.Keywords}}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap">
   <meta name="apple-mobile-web-app-status-bar-style" content="{{.Site.ThemeColor}}">
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="/css/style.css">
@@ -15,27 +17,38 @@
 </head>
 <body>
 <div class="app">
+  {{template "topbar" .}}
   {{template "header" .}}
   <div class="container">
-    <div class="body-grid">
-      <main class="main-content">
-        <div class="paper">
-          {{template "content" .}}
-        </div>
-      </main>
-      <aside class="sidebar">
-        {{template "sidebar" .}}
-      </aside>
-    </div>
-    <footer class="footer">
-      <p class="footer-text">Copyright &copy; Кынтэрец Л.Н. {{year}}</p>
-    </footer>
+    <main class="paper">
+      {{template "content" .}}
+    </main>
   </div>
+  {{template "footer" .}}
 </div>
 <script src="/js/app.js" defer></script>
 {{if .UseTabs}}<script src="/js/tabs.js" defer></script>{{end}}
 </body>
 </html>{{end}}
+
+{{define "topbar"}}
+<div class="top-bar">
+  <div class="top-bar-inner">
+    {{range .Contacts}}
+      {{if eq .Icon "phone"}}
+    <a href="{{safeURL .Link}}" class="top-bar-phone">
+      <img src="/images/phone.svg" alt="Телефон">{{.Text}}
+    </a>
+      {{end}}
+      {{if eq .Icon "email"}}
+    <a href="{{safeURL .Link}}">
+      <img src="/images/email.svg" alt="Email">{{.Text}}
+    </a>
+      {{end}}
+    {{end}}
+  </div>
+</div>
+{{end}}
 
 {{define "header"}}
 <header class="header">
@@ -48,7 +61,7 @@
       </div>
       <nav class="nav-tabs">
         {{range .Nav}}
-          <a href="{{.Page}}" class="tab-link{{if hasPrefix $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+          <a href="{{.Page}}" class="tab-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
         {{end}}
       </nav>
     </div>
@@ -58,7 +71,7 @@
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
         <a href="{{safeURL .Link}}" class="header-contact-link">
-          <img src="/images/{{$icon}}.svg" width="35" alt="{{$icon}}">
+          <img src="/images/{{$icon}}.svg" width="20" alt="{{$icon}}">
         </a>
           {{end}}
         {{end}}
@@ -73,14 +86,14 @@
   <div class="mobile-menu">
     <nav class="mobile-nav">
       {{range .Nav}}
-        <a href="{{.Page}}" class="mobile-nav-link{{if hasPrefix $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+        <a href="{{.Page}}" class="mobile-nav-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
       {{end}}
     </nav>
     <div class="mobile-contacts">
       {{range .Contacts}}
         {{if eq .Icon "phone"}}
       <a href="{{safeURL .Link}}" class="mobile-contact-link">
-        <img src="/images/phone.svg" width="28" alt="Телефон"> {{.Text}}
+        <img src="/images/phone.svg" width="22" alt="Телефон"> {{.Text}}
       </a>
         {{end}}
       {{end}}
@@ -89,7 +102,7 @@
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
         <a href="{{safeURL .Link}}" class="mobile-contact-icon">
-          <img src="/images/{{$icon}}.svg" width="32" alt="{{$icon}}">
+          <img src="/images/{{$icon}}.svg" width="22" alt="{{$icon}}">
         </a>
           {{end}}
         {{end}}
@@ -99,35 +112,52 @@
 </header>
 {{end}}
 
-{{define "sidebar"}}
-<div class="sidebar-friends">
-  <div class="paper">
-    <h3 class="sidebar-title">Партнёры</h3>
-    <div class="friends-button-wrap">
-      <a href="https://xn--18-6kci4ddh.xn--p1ai/" class="friends-button" target="_blank" rel="noopener">Детективное агентство "Право"</a>
+{{define "footer"}}
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-section">
+      <h3>{{.Site.Title}}</h3>
+      {{range .Contacts}}
+        {{if eq .Icon "location"}}
+      <p>{{.Text}}{{if .Text2}}, {{.Text2}}{{end}}</p>
+        {{end}}
+      {{end}}
+      {{range .Contacts}}
+        {{if eq .Icon "phone"}}
+      <div class="footer-contact-item">
+        <img src="/images/phone.svg" alt="">
+        <a href="{{safeURL .Link}}">{{.Text}}</a>
+      </div>
+        {{end}}
+        {{if eq .Icon "email"}}
+      <div class="footer-contact-item">
+        <img src="/images/email.svg" alt="">
+        <a href="{{safeURL .Link}}">{{.Text}}</a>
+      </div>
+        {{end}}
+      {{end}}
+    </div>
+    <div class="footer-section">
+      <h3>Услуги</h3>
+      <div class="footer-links">
+        <a href="/assistance/criminal/">Уголовные дела</a>
+        <a href="/assistance/arbitraj/">Арбитражные дела</a>
+        <a href="/assistance/civil/">Гражданские дела</a>
+        <a href="/assistance/family/">Семейные дела</a>
+        <a href="/assistance/consulting/">Консультирование</a>
+      </div>
+    </div>
+    <div class="footer-section">
+      <h3>Полезные ссылки</h3>
+      <div class="footer-links">
+        {{range .UsefulLinks}}
+          <a href="{{.Link}}" target="_blank" rel="noopener">{{.Name}}</a>
+        {{end}}
+      </div>
     </div>
   </div>
-</div>
-
-<div class="sidebar-gallery">
-  <div class="paper sidebar-art">
-    <img src="/images/train.jpg" alt="Рисунок" class="sidebar-art-img">
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; Кынтэрец Л.Н. {{year}}</span>
   </div>
-</div>
-
-<div class="sidebar-links">
-  <div class="paper">
-    <h3 class="sidebar-title">Полезные ссылки</h3>
-    <ul class="useful-links">
-      {{range .UsefulLinks}}
-        <li>
-          <a href="{{.Link}}" target="_blank" rel="noopener" class="useful-link">
-            <img src="/images/externalLink.svg" width="10" alt="">
-            {{.Name}}
-          </a>
-        </li>
-      {{end}}
-    </ul>
-  </div>
-</div>
+</footer>
 {{end}}

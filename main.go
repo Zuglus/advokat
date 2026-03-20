@@ -1,15 +1,20 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 )
+
+const baseURL = "https://advokat-sank-peterburg.ru"
 
 type SiteConfig struct {
 	Title       string `json:"title"`
@@ -168,9 +173,16 @@ type PageContext struct {
 	Year            int
 }
 
+type PageDef struct {
+	Page string
+	Path string
+	Ctx  PageContext
+}
+
 var (
 	appData   AppData
 	templates map[string]*template.Template
+	pageDefs  []PageDef
 )
 
 func loadJSON(filename string, v interface{}) {
@@ -201,12 +213,34 @@ func loadData() {
 	loadJSON("consulting.json", &appData.Consulting)
 	loadJSON("contactsPage.json", &appData.ContactsPage)
 	loadJSON("notFound.json", &appData.NotFound)
+
+	// Generate contact page buttons from shared contacts data
+	for _, c := range appData.Contacts {
+		if c.Icon == "location" {
+			continue
+		}
+		appData.ContactsPage.Buttons = append(appData.ContactsPage.Buttons, Button{
+			Name: c.Name,
+			Text: c.Text,
+			Href: c.Link,
+			Icon: c.Icon,
+		})
+	}
 }
 
 func newFuncMap() template.FuncMap {
 	return template.FuncMap{
 		"year": func() int { return time.Now().Year() },
 		"hasPrefix": strings.HasPrefix,
+		"isActiveNav": func(activeNav, page string) bool {
+			if activeNav == page {
+				return true
+			}
+			if page == "/assistance/" && strings.HasPrefix(activeNav, "/assistance/") {
+				return true
+			}
+			return false
+		},
 		"defaultAlign": func(align string) string {
 			if align != "" {
 				return align
@@ -275,167 +309,289 @@ func render(w http.ResponseWriter, page string, ctx PageContext) {
 	}
 }
 
+func initPageDefs() {
+	pageDefs = []PageDef{
+		{"index", "index.html", PageContext{
+			PageTitle:       "Адвокат в Санкт-Петербурге — Кынтэрец Людмила Николаевна",
+			PageDescription: "Адвокат в Санкт-Петербурге. Защита по уголовным делам, арбитраж, гражданские и семейные споры. Опыт более 15 лет.",
+			ActiveNav:       "/",
+		}},
+		{"about", "about/index.html", PageContext{
+			PageHeader:      "Кынтэрец Людмила Николаевна",
+			PageSubHeader:   "Адвокат",
+			PageDescription: "Адвокат Кынтэрец Людмила Николаевна. Более 15 лет практики защиты прав и интересов в Санкт-Петербурге.",
+			ActiveNav:       "/about/",
+			Breadcrumbs:     []Breadcrumb{{Name: "Кынтэрец Людмила Николаевна"}},
+		}},
+		{"contacts", "contacts/index.html", PageContext{
+			PageHeader:      "Контактная информация",
+			PageDescription: "Контакты адвоката Кынтэрец Л.Н. в Санкт-Петербурге: телефон, Telegram, WhatsApp, email. Адрес: 5-я Советская, д. 44.",
+			ActiveNav:       "/contacts/",
+			Breadcrumbs:     []Breadcrumb{{Name: "Контактная информация"}},
+		}},
+		{"assistance", "assistance/index.html", PageContext{
+			PageHeader:      "Юридическая помощь",
+			PageDescription: "Виды юридической помощи адвоката в Санкт-Петербурге: уголовные дела, арбитраж, гражданские и семейные споры, наследство, жилищные и налоговые вопросы.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs:     []Breadcrumb{{Name: "Юридическая помощь"}},
+		}},
+		{"criminal", "assistance/criminal/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по уголовным делам",
+			PageDescription: "Защита по уголовным делам в Санкт-Петербурге. Адвокат Кынтэрец Л.Н. — опыт ведения дел любой сложности и категории.",
+			ActiveNav:       "/assistance/",
+			UseTabs:         true,
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Уголовные дела"},
+			},
+		}},
+		{"arbitraj", "assistance/arbitraj/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по арбитражным делам",
+			PageDescription: "Арбитражные споры в Санкт-Петербурге. Представительство в арбитражных судах, защита интересов юридических лиц.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Арбитражные дела"},
+			},
+		}},
+		{"civil", "assistance/civil/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по гражданским делам",
+			PageDescription: "Гражданские дела в Санкт-Петербурге. Представительство в судах общей юрисдикции, защита прав и интересов.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Гражданские дела"},
+			},
+		}},
+		{"family", "assistance/family/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по семейным делам",
+			PageDescription: "Семейные споры в Санкт-Петербурге. Разводы, раздел имущества, определение места жительства детей.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Семейные дела"},
+			},
+		}},
+		{"house", "assistance/house/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по жилищным делам",
+			PageDescription: "Жилищные споры в Санкт-Петербурге. Споры о праве собственности, выселение, приватизация.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Жилищные дела"},
+			},
+		}},
+		{"legacy", "assistance/legacy/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по наследственным делам",
+			PageDescription: "Наследственные споры в Санкт-Петербурге. Оспаривание завещаний, восстановление сроков, раздел наследства.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Наследственные дела"},
+			},
+		}},
+		{"tax", "assistance/tax/index.html", PageContext{
+			PageHeader:      "Оказание юридической помощи по налоговым делам",
+			PageDescription: "Налоговые споры в Санкт-Петербурге. Защита интересов в налоговых органах и судах.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Налоговые дела"},
+			},
+		}},
+		{"consulting", "assistance/consulting/index.html", PageContext{
+			PageHeader:      "Консультирование",
+			PageDescription: "Юридические консультации адвоката в Санкт-Петербурге. Устные и письменные консультации по всем отраслям права.",
+			ActiveNav:       "/assistance/",
+			Breadcrumbs: []Breadcrumb{
+				{Name: "Юридическая помощь", URL: "/assistance/"},
+				{Name: "Консультирование"},
+			},
+		}},
+		{"404", "404.html", PageContext{
+			PageHeader: "Ошибка 404",
+		}},
+	}
+}
+
+func getPageDef(page string) PageContext {
+	for _, p := range pageDefs {
+		if p.Page == page {
+			return p.Ctx
+		}
+	}
+	return PageContext{}
+}
+
 func handleIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		handle404(w, r)
 		return
 	}
-	render(w, "index", PageContext{
-		PageTitle:       "Адвокат в Санкт-Петербурге — Кынтэрец Людмила Николаевна",
-		PageDescription: "Адвокат в Санкт-Петербурге. Защита по уголовным делам, арбитраж, гражданские и семейные споры. Опыт более 15 лет.",
-		ActiveNav:       "/",
-	})
+	render(w, "index", getPageDef("index"))
 }
 
-func handleAbout(w http.ResponseWriter, r *http.Request) {
-	render(w, "about", PageContext{
-		PageHeader:      "Кынтэрец Людмила Николаевна",
-		PageSubHeader:   "Адвокат",
-		PageDescription: "Адвокат Кынтэрец Людмила Николаевна. Более 15 лет практики защиты прав и интересов в Санкт-Петербурге.",
-		ActiveNav:       "/about/",
-		Breadcrumbs:     []Breadcrumb{{Name: "Кынтэрец Людмила Николаевна"}},
-	})
-}
-
-func handleContacts(w http.ResponseWriter, r *http.Request) {
-	render(w, "contacts", PageContext{
-		PageHeader:      "Контактная информация",
-		PageDescription: "Контакты адвоката Кынтэрец Л.Н. в Санкт-Петербурге: телефон, Telegram, WhatsApp, email. Адрес: 5-я Советская, д. 44.",
-		ActiveNav:       "/contacts/",
-		Breadcrumbs:     []Breadcrumb{{Name: "Контактная информация"}},
-	})
-}
-
-func handleAssistance(w http.ResponseWriter, r *http.Request) {
-	render(w, "assistance", PageContext{
-		PageHeader:      "Юридическая помощь",
-		PageDescription: "Виды юридической помощи адвоката в Санкт-Петербурге: уголовные дела, арбитраж, гражданские и семейные споры, наследство, жилищные и налоговые вопросы.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs:     []Breadcrumb{{Name: "Юридическая помощь"}},
-	})
-}
-
-func handleCriminal(w http.ResponseWriter, r *http.Request) {
-	render(w, "criminal", PageContext{
-		PageHeader:      "Оказание юридической помощи по уголовным делам",
-		PageDescription: "Защита по уголовным делам в Санкт-Петербурге. Адвокат Кынтэрец Л.Н. — опыт ведения дел любой сложности и категории.",
-		ActiveNav:       "/assistance/",
-		UseTabs:         true,
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Уголовные дела"},
-		},
-	})
-}
-
-func handleArbitraj(w http.ResponseWriter, r *http.Request) {
-	render(w, "arbitraj", PageContext{
-		PageHeader:      "Оказание юридической помощи по арбитражным делам",
-		PageDescription: "Арбитражные споры в Санкт-Петербурге. Представительство в арбитражных судах, защита интересов юридических лиц.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Арбитражные дела"},
-		},
-	})
-}
-
-func handleCivil(w http.ResponseWriter, r *http.Request) {
-	render(w, "civil", PageContext{
-		PageHeader:      "Оказание юридической помощи по гражданским делам",
-		PageDescription: "Гражданские дела в Санкт-Петербурге. Представительство в судах общей юрисдикции, защита прав и интересов.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Гражданские дела"},
-		},
-	})
-}
-
-func handleFamily(w http.ResponseWriter, r *http.Request) {
-	render(w, "family", PageContext{
-		PageHeader:      "Оказание юридической помощи по семейным делам",
-		PageDescription: "Семейные споры в Санкт-Петербурге. Разводы, раздел имущества, определение места жительства детей.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Семейные дела"},
-		},
-	})
-}
-
-func handleHouse(w http.ResponseWriter, r *http.Request) {
-	render(w, "house", PageContext{
-		PageHeader:      "Оказание юридической помощи по жилищным делам",
-		PageDescription: "Жилищные споры в Санкт-Петербурге. Споры о праве собственности, выселение, приватизация.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Жилищные дела"},
-		},
-	})
-}
-
-func handleLegacy(w http.ResponseWriter, r *http.Request) {
-	render(w, "legacy", PageContext{
-		PageHeader:      "Оказание юридической помощи по наследственным делам",
-		PageDescription: "Наследственные споры в Санкт-Петербурге. Оспаривание завещаний, восстановление сроков, раздел наследства.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Наследственные дела"},
-		},
-	})
-}
-
-func handleTax(w http.ResponseWriter, r *http.Request) {
-	render(w, "tax", PageContext{
-		PageHeader:      "Оказание юридической помощи по налоговым делам",
-		PageDescription: "Налоговые споры в Санкт-Петербурге. Защита интересов в налоговых органах и судах.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Налоговые дела"},
-		},
-	})
-}
-
-func handleConsulting(w http.ResponseWriter, r *http.Request) {
-	render(w, "consulting", PageContext{
-		PageDescription: "Юридические консультации адвоката в Санкт-Петербурге. Устные и письменные консультации по всем отраслям права.",
-		ActiveNav:       "/assistance/",
-		Breadcrumbs: []Breadcrumb{
-			{Name: "Юридическая помощь", URL: "/assistance/"},
-			{Name: "Консультирование"},
-		},
-	})
+func pageHandler(page string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		render(w, page, getPageDef(page))
+	}
 }
 
 func handle404(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	render(w, "404", PageContext{
-		PageHeader: "Ошибка 404",
+	render(w, "404", getPageDef("404"))
+}
+
+func renderToFile(page string, ctx PageContext, outPath string) error {
+	ctx.Year = time.Now().Year()
+	ctx.AppData = appData
+
+	var buf bytes.Buffer
+	if err := templates[page].ExecuteTemplate(&buf, "base", ctx); err != nil {
+		return fmt.Errorf("template %s: %w", page, err)
+	}
+
+	dir := filepath.Dir(outPath)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return fmt.Errorf("mkdir %s: %w", dir, err)
+	}
+
+	return os.WriteFile(outPath, buf.Bytes(), 0644)
+}
+
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
+		return err
+	}
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, in)
+	return err
+}
+
+func copyDir(src, dst string) error {
+	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, _ := filepath.Rel(src, path)
+		target := filepath.Join(dst, rel)
+		if info.IsDir() {
+			return os.MkdirAll(target, 0755)
+		}
+		return copyFile(path, target)
 	})
+}
+
+func sitemapXML() []byte {
+	var buf bytes.Buffer
+	buf.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n")
+	buf.WriteString(`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` + "\n")
+	for _, p := range pageDefs {
+		if p.Page == "404" {
+			continue
+		}
+		loc := baseURL + "/"
+		if p.Path != "index.html" {
+			dir := strings.TrimSuffix(p.Path, "index.html")
+			loc = baseURL + "/" + dir
+		}
+		buf.WriteString(fmt.Sprintf("  <url><loc>%s</loc></url>\n", loc))
+	}
+	buf.WriteString("</urlset>\n")
+	return buf.Bytes()
+}
+
+func generateSitemap(outDir string) {
+	outPath := filepath.Join(outDir, "sitemap.xml")
+	if err := os.WriteFile(outPath, sitemapXML(), 0644); err != nil {
+		log.Fatalf("Sitemap: %v", err)
+	}
+	log.Printf("  sitemap.xml")
+}
+
+func buildStatic(outDir string) {
+	// Remove old output
+	os.RemoveAll(outDir)
+
+	// Render all pages from single source of truth
+	for _, p := range pageDefs {
+		outPath := filepath.Join(outDir, p.Path)
+		if err := renderToFile(p.Page, p.Ctx, outPath); err != nil {
+			log.Fatalf("Build error: %v", err)
+		}
+		log.Printf("  %s", p.Path)
+	}
+
+	// Generate sitemap.xml
+	generateSitemap(outDir)
+
+	// Copy static assets
+	staticDirs := []string{"css", "js", "images"}
+	for _, dir := range staticDirs {
+		if _, err := os.Stat(dir); err == nil {
+			if err := copyDir(dir, filepath.Join(outDir, dir)); err != nil {
+				log.Fatalf("Copy %s: %v", dir, err)
+			}
+			log.Printf("  %s/", dir)
+		}
+	}
+
+	staticFiles := []string{"favicon.ico", "robots.txt", "agreement.docx", "manifest.json"}
+	for _, f := range staticFiles {
+		if _, err := os.Stat(f); err == nil {
+			if err := copyFile(f, filepath.Join(outDir, f)); err != nil {
+				log.Fatalf("Copy %s: %v", f, err)
+			}
+			log.Printf("  %s", f)
+		}
+	}
+
+	log.Printf("Build complete → %s/", outDir)
 }
 
 func main() {
 	loadData()
 	parseTemplates()
+	initPageDefs()
 
+	// Static build mode
+	if len(os.Args) > 1 && os.Args[1] == "--build" {
+		outDir := "dist"
+		if len(os.Args) > 2 {
+			outDir = os.Args[2]
+		}
+		log.Printf("Building static site...")
+		buildStatic(outDir)
+		return
+	}
+
+	// Dev server mode
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", handleIndex)
-	mux.HandleFunc("GET /about/", handleAbout)
-	mux.HandleFunc("GET /contacts/", handleContacts)
-	mux.HandleFunc("GET /assistance/", handleAssistance)
-	mux.HandleFunc("GET /assistance/criminal/", handleCriminal)
-	mux.HandleFunc("GET /assistance/arbitraj/", handleArbitraj)
-	mux.HandleFunc("GET /assistance/civil/", handleCivil)
-	mux.HandleFunc("GET /assistance/family/", handleFamily)
-	mux.HandleFunc("GET /assistance/house/", handleHouse)
-	mux.HandleFunc("GET /assistance/legacy/", handleLegacy)
-	mux.HandleFunc("GET /assistance/tax/", handleTax)
-	mux.HandleFunc("GET /assistance/consulting/", handleConsulting)
+	mux.HandleFunc("GET /about/", pageHandler("about"))
+	mux.HandleFunc("GET /contacts/", pageHandler("contacts"))
+	mux.HandleFunc("GET /assistance/", pageHandler("assistance"))
+	mux.HandleFunc("GET /assistance/criminal/", pageHandler("criminal"))
+	mux.HandleFunc("GET /assistance/arbitraj/", pageHandler("arbitraj"))
+	mux.HandleFunc("GET /assistance/civil/", pageHandler("civil"))
+	mux.HandleFunc("GET /assistance/family/", pageHandler("family"))
+	mux.HandleFunc("GET /assistance/house/", pageHandler("house"))
+	mux.HandleFunc("GET /assistance/legacy/", pageHandler("legacy"))
+	mux.HandleFunc("GET /assistance/tax/", pageHandler("tax"))
+	mux.HandleFunc("GET /assistance/consulting/", pageHandler("consulting"))
 
 	mux.Handle("GET /css/", http.FileServer(http.Dir(".")))
 	mux.Handle("GET /js/", http.FileServer(http.Dir(".")))
@@ -446,11 +602,15 @@ func main() {
 	mux.HandleFunc("GET /robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "robots.txt")
 	})
-	mux.HandleFunc("GET /agreement.doc", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "agreement.doc")
+	mux.HandleFunc("GET /agreement.docx", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "agreement.docx")
 	})
 	mux.HandleFunc("GET /manifest.json", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "manifest.json")
+	})
+	mux.HandleFunc("GET /sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+		w.Write(sitemapXML())
 	})
 
 	port := os.Getenv("PORT")

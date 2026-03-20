@@ -12,12 +12,5 @@
     { "id": 4, "paragraph": "Согласие действует до достижения целей обработки персональных данных или в течение срока хранения информации.", "align": "justify" },
     { "id": 5, "paragraph": "Согласие может быть отозвано в любой момент по заявлению разместившего свои персональные данные.", "align": "justify" },
     { "id": 6, "paragraph": "Заполняя форму обратной связи, Вы подтверждаете, что, давая такое согласие, действуете по собственной воле и в своих интересах.", "align": "justify" }
-  ],
-  "buttons": [
-    { "id": 2, "name": "Телефон:", "text": "+7 (911) 985-50-36", "href": "tel:+79119855036", "icon": "phone", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 3, "name": "Email:", "text": "lkynteretc@gmail.com", "href": "mailto:lkynteretc@gmail.com", "icon": "email", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 4, "name": "Telegram:", "text": "Lkynteretc", "href": "tg://resolve?domain=Lkynteretc", "icon": "telegram", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 5, "name": "Viber:", "text": "+7 (911) 985-50-36", "href": "viber://chat?number=+79119855036", "icon": "viber", "gridMD": 4, "gridSM": 6, "gridXS": 12 },
-    { "id": 6, "name": "WhatsApp:", "text": "+7 (911) 985-50-36", "href": "whatsapp://send?phone=79119855036", "icon": "whatsapp", "gridMD": 4, "gridSM": 6, "gridXS": 12 }
   ]
 }
