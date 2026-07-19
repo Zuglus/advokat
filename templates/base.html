@@ -16,11 +16,12 @@
   <title>{{if .PageTitle}}{{.PageTitle}}{{else if .PageHeader}}{{.PageHeader}} — {{.Site.Title}}{{else}}{{.Site.Title}}{{end}}</title>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Перейти к содержанию</a>
 <div class="app">
   {{template "topbar" .}}
   {{template "header" .}}
   <div class="container">
-    <main class="paper">
+    <main id="main-content" class="paper">
       {{template "content" .}}
     </main>
   </div>
@@ -59,9 +60,9 @@
           <img src="/images/logo.svg" alt="Адвокат Кынтэрец Л.Н." class="logo-img">
         </a>
       </div>
-      <nav class="nav-tabs">
+      <nav class="nav-tabs" aria-label="Основная навигация">
         {{range .Nav}}
-          <a href="{{.Page}}" class="tab-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+          <a href="{{.Page}}" class="tab-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}"{{if isActiveNav $.ActiveNav .Page}} aria-current="page"{{end}}>{{.Name}}</a>
         {{end}}
       </nav>
     </div>
@@ -70,23 +71,23 @@
         {{$icon := .}}
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
-        <a href="{{safeURL .Link}}" class="header-contact-link">
-          <img src="/images/{{$icon}}.svg" width="20" alt="{{$icon}}">
+        <a href="{{safeURL .Link}}" class="header-contact-link" aria-label="{{$icon}}">
+          <img src="/images/{{$icon}}.svg" width="20" alt="">
         </a>
           {{end}}
         {{end}}
       {{end}}
     </div>
-    <button class="burger-btn" aria-label="Открыть меню">
+    <button class="burger-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
       <span class="burger-line"></span>
       <span class="burger-line"></span>
       <span class="burger-line"></span>
     </button>
   </div>
-  <div class="mobile-menu">
-    <nav class="mobile-nav">
+  <div class="mobile-menu" id="mobile-menu">
+    <nav class="mobile-nav" aria-label="Мобильная навигация">
       {{range .Nav}}
-        <a href="{{.Page}}" class="mobile-nav-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}">{{.Name}}</a>
+        <a href="{{.Page}}" class="mobile-nav-link{{if isActiveNav $.ActiveNav .Page}} active{{end}}"{{if isActiveNav $.ActiveNav .Page}} aria-current="page"{{end}}>{{.Name}}</a>
       {{end}}
     </nav>
     <div class="mobile-contacts">
@@ -101,8 +102,8 @@
         {{$icon := .}}
         {{range $.Contacts}}
           {{if eq .Icon $icon}}
-        <a href="{{safeURL .Link}}" class="mobile-contact-icon">
-          <img src="/images/{{$icon}}.svg" width="22" alt="{{$icon}}">
+        <a href="{{safeURL .Link}}" class="mobile-contact-icon" aria-label="{{$icon}}">
+          <img src="/images/{{$icon}}.svg" width="22" alt="">
         </a>
           {{end}}
         {{end}}

@@ -22,8 +22,7 @@
 
 {{define "renderText"}}
 {{range .}}
-  <p class="text-paragraph{{if eq .Variant "subtitle2"}} text-subtitle{{else if eq .Variant "body2"}} text-body2{{else if eq .Variant "overline"}} text-overline{{end}}"
-     style="text-align: {{defaultAlign .Align}}{{if .TextDecoration}}; text-decoration: {{.TextDecoration}}{{end}}">
+  <p class="text-paragraph{{if eq .Variant "subtitle2"}} text-subtitle{{else if eq .Variant "body2"}} text-body2{{else if eq .Variant "overline"}} text-overline{{end}}{{if eq .Align "center"}} text-center{{else if eq .Align "right"}} text-right{{else if eq .Align "justify"}} text-justify{{end}}{{if eq .TextDecoration "underline"}} text-underline{{else if eq .TextDecoration "line-through"}} text-line-through{{end}}">
     {{if .ParagraphBefore}}
       {{.ParagraphBefore}}
       <a href="{{.LinkHref}}"
@@ -41,10 +40,10 @@
 {{define "renderButtons"}}
 <div class="btn-grid">
   {{range .}}
-    <a href="{{if .Link}}{{safeURL .Link}}{{else}}{{safeURL .Href}}{{end}}" class="btn btn-primary{{if .Icon}} btn-with-icon{{end}}"
+    <a href="{{if .Link}}{{safeURL .Link}}{{else}}{{safeURL .Href}}{{end}}" class="btn btn--primary{{if .Icon}} btn--with-icon{{end}}"
        {{if isExternal .}}target="_blank" rel="noopener"{{end}}>
       {{if .Icon}}
-        <img src="/images/{{.Icon}}.svg" width="35" alt="{{.Icon}}" class="btn-icon">
+        <img src="/images/{{.Icon}}.svg" width="35" alt="" class="btn-icon">
       {{end}}
       <span>
         {{if .Name}}<span class="btn-name">{{.Name}}</span>{{end}}
@@ -93,10 +92,9 @@
 {{end}}
 
 {{define "renderAlert"}}
-<div class="alert-block">
+<div class="callout">
   {{range .}}
-    <p class="alert-text"
-       style="text-align: {{defaultAlignCenter .Align}}{{if .TextDecoration}}; text-decoration: {{.TextDecoration}}{{end}}">
+    <p class="callout-text{{if eq .Align "left"}} text-left{{else if eq .Align "right"}} text-right{{else if eq .Align "justify"}} text-justify{{else}} text-center{{end}}{{if eq .TextDecoration "underline"}} text-underline{{else if eq .TextDecoration "line-through"}} text-line-through{{end}}">
       {{.Paragraph}}
     </p>
   {{end}}
@@ -104,30 +102,30 @@
 {{end}}
 
 {{define "renderPricingNote"}}
-<div class="pricing-note">
-  <p class="pricing-note-text">Стоимость услуг определяется индивидуально с учётом сложности дела и объёма юридической помощи.</p>
-  <div class="pricing-note-actions">
+<div class="callout callout--with-actions">
+  <p class="callout-text">Стоимость услуг определяется индивидуально с учётом сложности дела и объёма юридической помощи.</p>
+  <div class="callout-actions">
     {{range .Contacts}}
       {{if eq .Icon "phone"}}
-    <a href="{{safeURL .Link}}" class="btn btn-cta">Позвонить: {{.Text}}</a>
+    <a href="{{safeURL .Link}}" class="btn btn--gold btn--lg">Позвонить: {{.Text}}</a>
       {{end}}
     {{end}}
-    <a href="/assistance/consulting/" class="btn btn-gold">Консультация — от 2 500 руб.</a>
+    <a href="/assistance/consulting/" class="btn btn--gold">Консультация — от 2 500 руб.</a>
   </div>
 </div>
 {{end}}
 
 {{define "renderTabs"}}
 <div class="tabs-container">
-  <div class="tabs-buttons">
+  <div class="tabs-buttons" role="tablist">
     {{range $i, $tab := .}}
-      <button class="tabs-btn{{if isFirst $i}} active{{end}}" data-tab="{{$tab.TabName}}">
+      <button class="tabs-btn{{if isFirst $i}} active{{end}}" data-tab="{{$tab.TabName}}" role="tab" aria-selected="{{if isFirst $i}}true{{else}}false{{end}}" aria-controls="tabpanel-{{$tab.TabName}}" id="tab-{{$tab.TabName}}">
         {{$tab.ButtonName}}
       </button>
     {{end}}
   </div>
   {{range $i, $tab := .}}
-    <div class="tabs-content{{if isFirst $i}} active{{end}}" data-tab-content="{{$tab.TabName}}">
+    <div class="tabs-content{{if isFirst $i}} active{{end}}" data-tab-content="{{$tab.TabName}}" role="tabpanel" aria-labelledby="tab-{{$tab.TabName}}" id="tabpanel-{{$tab.TabName}}">
       {{template "renderText" $tab.Text}}
       {{if $tab.Table}}
         {{template "renderTable" $tab.Table}}

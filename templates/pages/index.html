@@ -8,7 +8,7 @@
 <div class="hero-cta">
   {{range .Contacts}}
     {{if eq .Icon "phone"}}
-  <a href="{{safeURL .Link}}" class="btn btn-cta">Позвонить: {{.Text}}</a>
+  <a href="{{safeURL .Link}}" class="btn btn--gold btn--lg">Позвонить: {{.Text}}</a>
     {{end}}
   {{end}}
   <span class="hero-cta-note">Консультация — от 2 500 руб.</span>
@@ -20,7 +20,7 @@
   <p class="featured-card-text">Защита подозреваемых, обвиняемых и осуждённых. Представление интересов потерпевших и свидетелей. Выезд к месту задержания — в течение часа.</p>
   <div class="featured-card-footer">
     <span class="featured-card-price">от 5 000 руб.</span>
-    <a href="/assistance/criminal/" class="btn btn-gold">Подробнее</a>
+    <a href="/assistance/criminal/" class="btn btn--gold">Подробнее</a>
   </div>
 </div>
 
